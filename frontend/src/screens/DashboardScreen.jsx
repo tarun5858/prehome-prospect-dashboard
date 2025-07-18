@@ -286,7 +286,8 @@ const progressPercent = Math.min(100, Math.round((currentSectionIndex / formSect
       <Typography
         variant="h4"
         sx={{
-          fontWeight: 700,
+          fontWeight: 600,
+           fontSize:24,
           color: "#222",
           fontFamily: "Poppins, sans-serif",
         }}
@@ -297,7 +298,7 @@ const progressPercent = Math.min(100, Math.round((currentSectionIndex / formSect
         sx={{
           fontWeight: 600,
           color: "#7BA1A7",
-          fontSize: 20,
+          fontSize: 16,
           fontFamily: "Poppins, sans-serif",
         }}
       >
@@ -310,7 +311,7 @@ const progressPercent = Math.min(100, Math.round((currentSectionIndex / formSect
         sx={{
           fontWeight: 500,
           color: "#222",
-          fontSize: 20,
+          fontSize: 16,
           fontFamily: "Poppins, sans-serif",
           mr: 3,
         }}
@@ -351,7 +352,7 @@ const progressPercent = Math.min(100, Math.round((currentSectionIndex / formSect
               key={sec.sectionId}
               sx={{
                 position: "absolute",
-                left: `${(idx / (formSections.length - 1)) * 100}%`,
+                left: `${(idx / (formSections.length - 0.97)) * 100}%`,
                 top: "50%",
                 transform: "translate(-50%, -50%)",
                 width: 16,
@@ -369,7 +370,7 @@ const progressPercent = Math.min(100, Math.round((currentSectionIndex / formSect
         <Box
           sx={{
             position: "absolute",
-            left: `calc(${progressPercent}% - 8px)`,
+            left: `calc(${progressPercent}% + 0px)`,
             top: "50%",
             transform: "translateY(-50%)",
             width: 16,

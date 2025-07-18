@@ -1,18 +1,12 @@
 import "../assets/style.css";
-import { useState } from "react";
+// import { useState } from "react";
 
-const OutlineCta = ({ text, ...props }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = () => {
-    setIsClicked(true);
-  };
-
+const OutlineCta = ({ text, isClicked, onClick, ...props }) => {
   return (
     <button
       type="button"
       className={`outline-cta ${isClicked ? 'clicked' : ''}`}
-      onClick={handleClick}
+      onClick={onClick}
       {...props}
     >
       {text}

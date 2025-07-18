@@ -28,8 +28,22 @@ const InputCta = ({ id, handleNext, subHeading, subHeading2 }) => {
           onChange={handleInputChange}
           onBlur={submitIfValid}
           onKeyDown={(e) => e.key === "Enter" && submitIfValid()}
-          sx={{ mt: 2, borderRadius: "15px", border: "1px solid grey" }}
-        />
+sx={{
+    mt: 2,
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '8px',
+      '& fieldset': {
+        borderColor: 'grey',
+      },
+      '&:hover fieldset': {
+        borderColor: 'black', 
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#EF9C00', 
+        boxShadow: '0 0 0 2px rgba(255,87,34,0.2)', 
+      },
+    },
+  }}        />
       </Box>
     </Container>
   );

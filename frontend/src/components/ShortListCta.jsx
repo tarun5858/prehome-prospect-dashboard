@@ -6,6 +6,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import { addMonths, isSameMonth, isSameYear, format } from 'date-fns';
+import {
+  Box,
+} from "@mui/material";
 
 const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
   const [isShortlisted, setIsShortlisted] = useState(false);
@@ -87,6 +90,16 @@ const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
         </button>
       )}
 
+<Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "flex-start", md: "flex-end" },
+              gap: 2,
+              // minWidth: 320,
+            }}
+          >
+          
       {isShortlisted && (
         <>
           {status !== "Visited" && (
@@ -120,7 +133,7 @@ const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
               fontWeight: "bold",
               padding: "10px 24px",
               borderRadius: "30px",
-              fontSize: 16,
+              fontSize: 14,
               width: "fit-content",
               textAlign: "center",
               boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
@@ -135,7 +148,7 @@ const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
         <div
           style={{
             background: "#C7F6FE",
-            color: "#222",
+            color: "#3E3E3E",
             fontWeight: "bold",
             padding: "10px 24px",
             borderRadius: "30px",
@@ -147,9 +160,9 @@ const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
           Property Visit on {formattedDate}
         </div>
       )}
-
+</Box>
       {showCalendar && (
-        <div style={{ marginTop: "10px" }}>
+        <div style={{ marginTop: "10px",position:"absolute",top:"280px" }}>
           <DatePicker
             selected={visitDate}
             onChange={handleDateSelect}

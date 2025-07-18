@@ -66,7 +66,9 @@ const PropertyDetails = () => {
 
   const fetchProperty = async () => {
     try {
-      const res = await axios.get(`https://prehome-prospect-dashboard.onrender.com/api/properties/${id}`);
+      const res = await axios.get(
+        `https://prehome-prospect-dashboard.onrender.com/api/properties/${id}`
+      );
       setProperty(res.data);
       setSelectedImageUrl(res.data.images[0]?.url);
 
@@ -76,7 +78,11 @@ const PropertyDetails = () => {
 
       if (userActivity.data) {
         setIsShortlisted(userActivity.data.shortlisted || false);
-        setVisitDate(userActivity.data.visitDate ? new Date(userActivity.data.visitDate) : null);
+        setVisitDate(
+          userActivity.data.visitDate
+            ? new Date(userActivity.data.visitDate)
+            : null
+        );
         setStatus(userActivity.data.status || "");
       }
     } catch (err) {
@@ -100,9 +106,17 @@ const PropertyDetails = () => {
     setRadius(newValue);
   };
 
-  const handleImageLabelClick = (url) => {
+  const handleImageLabelClick = (url,index) => {
     setSelectedImageUrl(url);
+    setClickedIndex(index);
+      console.log("Clicked image URL:", url);
+
   };
+
+
+  const [clickedIndex, setClickedIndex] = useState(null); // tracks which button was clicked
+
+
 
   if (!property) {
     return (
@@ -135,7 +149,9 @@ const PropertyDetails = () => {
                 style={{ cursor: "pointer", marginRight: 12 }}
                 onClick={() => navigate("/available-property")}
               />
-              <Typography variant="h5" fontWeight={700}>Property Details</Typography>
+              <Typography fontWeight={600} sx={{ fontSize: 24 }}>
+                Property Details
+              </Typography>
             </Box>
 
             <Box
@@ -147,44 +163,34 @@ const PropertyDetails = () => {
                 flexWrap: "wrap",
                 gap: 2,
                 mb: 2,
+                width: "100%",
               }}
             >
-              <Typography variant="h4" fontWeight={700} sx={{ mr: 2, flexShrink: 0 }}>
+              <Typography
+                fontWeight={600}
+                sx={{ mr: 2, flexShrink: 0, fontSize: 24 }}
+              >
                 {property.title}
               </Typography>
 
               {status === "Visited" && (
-                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* position:"absolute" */}
                   <Box
-                    sx={{
-                      background: "#DAF7A6",
-                      color: "#222",
-                      fontWeight: 600,
-                      px: 3,
-                      py: 1.2,
-                      borderRadius: "20px",
-                      fontSize: 16,
-                      textAlign: "center",
-                      minWidth: 160,
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-                    }}
+                  className="prop-details-prop-visited "
                   >
                     Property Visited
                   </Box>
                   {visitDate && (
                     <Box
-                      sx={{
-                        background: "#C7F6FE",
-                        color: "#222",
-                        fontWeight: 600,
-                        px: 3,
-                        py: 1.2,
-                        borderRadius: "20px",
-                        fontSize: 16,
-                        textAlign: "center",
-                        minWidth: 200,
-                        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-                      }}
+                  className="prop-details-prop-visit-date"
                     >
                       Property Visit on{" "}
                       {new Date(visitDate).toLocaleDateString("en-IN", {
@@ -210,14 +216,14 @@ const PropertyDetails = () => {
                       py: 1,
                       borderRadius: "30px",
                       border: isSelected ? "none" : "2px solid #222",
-                      backgroundColor: isSelected ? "#7BD1E6" : "transparent",
+                      backgroundColor: isSelected ? "#D4EDF4" : "transparent",
                       color: isSelected ? "#fff" : "#222",
                       fontWeight: 600,
                       fontSize: 16,
                       cursor: "pointer",
                       transition: "all 0.2s ease-in-out",
                       "&:hover": {
-                        backgroundColor: isSelected ? "#7BD1E6" : "#f0f0f0",
+                        backgroundColor: isSelected ? "#D4EDF4" : "#f0f0f0",
                       },
                     }}
                   >
@@ -231,10 +237,11 @@ const PropertyDetails = () => {
           <Box
             sx={{
               display: "flex",
+
               flexDirection: "column",
               alignItems: { xs: "flex-start", md: "flex-end" },
               gap: 2,
-              minWidth: 320,
+              // minWidth: 320,
             }}
           >
             {status !== "Visited" && (
@@ -253,18 +260,21 @@ const PropertyDetails = () => {
                   >
                     {isShortlisted && (
                       <Box
-                        sx={{
-                          background: "#FFD580",
-                          color: "#222",
-                          fontWeight: 600,
-                          px: 3,
-                          py: 1.2,
-                          borderRadius: "20px",
-                          fontSize: 16,
-                          textAlign: "center",
-                          minWidth: 140,
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-                        }}
+                       className="prop-details-shortlist-cta"
+
+                        // sx={{
+                        //   background: "#F8C86B",
+                        //   color: "#000",
+                        //   fontWeight: "bold",
+                        //   px: 3,
+                        //   py: 1.2,
+                        //   borderRadius: "20px",
+                        //   fontSize: 14,
+                        //   textAlign: "center",
+                        //   minWidth: 140,
+                        //   boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                        //   display: "none",
+                        // }}
                       >
                         Shortlisted
                       </Box>
@@ -272,8 +282,8 @@ const PropertyDetails = () => {
                     {visitDate && (
                       <Box
                         sx={{
-                          background: "#C7F6FE",
-                          color: "#222",
+                          background: "#D4EDF4",
+                          color: "#3E3E3E",
                           fontWeight: 600,
                           px: 3,
                           py: 1.2,
@@ -282,6 +292,7 @@ const PropertyDetails = () => {
                           textAlign: "center",
                           minWidth: 200,
                           boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                          display: "none",
                         }}
                       >
                         Property Visit on{" "}
@@ -300,7 +311,9 @@ const PropertyDetails = () => {
                   userId={userId}
                   onUpdate={(updated) => {
                     setIsShortlisted(updated.shortlisted || false);
-                    setVisitDate(updated.visitDate ? new Date(updated.visitDate) : null);
+                    setVisitDate(
+                      updated.visitDate ? new Date(updated.visitDate) : null
+                    );
                     setStatus(updated.status || "");
                   }}
                 />
@@ -314,7 +327,8 @@ const PropertyDetails = () => {
             <OutlineCta
               key={index}
               text={image.label}
-              onClick={() => handleImageLabelClick(image.url)}
+              isClicked={clickedIndex === index}
+              onClick={() => handleImageLabelClick(image.url,index)}
             />
           ))}
         </Box>
@@ -359,14 +373,16 @@ const PropertyDetails = () => {
           <p className="sub-Heading-1">Bedrooms</p>
           <p className="sub-Heading">{property.generalInfo.numberOfBedrooms}</p>
           <p className="sub-Heading-1">Bathrooms</p>
-          <p className="sub-Heading">{property.generalInfo.numberOfBathrooms}</p>
+          <p className="sub-Heading">
+            {property.generalInfo.numberOfBathrooms}
+          </p>
           <p className="sub-Heading-1">Floors</p>
           <p className="sub-Heading">{property.generalInfo.numberOfFloors}</p>
         </Box>
       </Box>
 
       <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 2, display: "none" }}>
           <Typography gutterBottom>
             Set Nearby Search Radius (meters): {radius}
           </Typography>
@@ -379,10 +395,14 @@ const PropertyDetails = () => {
             valueLabelDisplay="auto"
           />
         </Box>
-        <MapComponent
-          center={{ lat: property.latitude, lng: property.longitude }}
-          places={nearbyPlaces}
-        />
+        <Box sx={{boxShadow:"1px 1px 10px 0px rgba(1, 29, 80, 0.6)",marginBottom:"1%", borderRadius: "16px", }}>
+          {" "}
+          <MapComponent
+            sx={{ border: "1px solid grey"}}
+            center={{ lat: property.latitude, lng: property.longitude }}
+            places={nearbyPlaces}
+          />
+        </Box>
       </Container>
     </Box>
   );

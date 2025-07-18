@@ -25,7 +25,7 @@ const CtaCards = ({ subHeading, options, handleNext, text }) => {
           <Button
             onClick={() => handleNext("Skipped")}
             variant="text"
-            sx={{ color: "#0086AD", textTransform: "none", cursor: "pointer" }}
+            sx={{  color: "#7BA1A7", fontSize: 16, textTransform: "none", cursor: "pointer",fontWeight: 600, }}
           >
             {text}
           </Button>

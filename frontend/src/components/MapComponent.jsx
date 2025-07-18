@@ -33,7 +33,7 @@ const MapComponent = ({ center, places }) => {
 
   return (
     <GoogleMap
-      mapContainerStyle={{ width: '100%', height: '400px' }}
+      mapContainerStyle={{ width: '100%', height: '560px', borderRadius: 16, }}
       center={mapCenter}
       zoom={zoom}
       onLoad={handleOnLoad}
@@ -50,6 +50,7 @@ const MapComponent = ({ center, places }) => {
           }}
           title={place.name}
           onClick={() => handleMarkerClick(place)}
+          
         />
       ))}
 
@@ -57,6 +58,7 @@ const MapComponent = ({ center, places }) => {
         <InfoWindow
           position={{ lat: selectedPlace.latitude, lng: selectedPlace.longitude }}
           onCloseClick={() => setSelectedPlace(null)}
+          
         >
           <div>
             <h4>{selectedPlace.name}</h4>
