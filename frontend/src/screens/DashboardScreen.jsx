@@ -268,7 +268,7 @@ const DashboardScreen = () => {
     return (
       <Box sx={{ p: 4, textAlign: "center" }}>
         <Typography variant="h5" color="primary">
-          🎉 Thank you! We're on the job, coming soon to you with homes of your choice.
+          🎉 Thank you! We&aposre on the job, coming soon to you with homes of your choice.
         </Typography>
       </Box>
     );
@@ -277,7 +277,7 @@ const DashboardScreen = () => {
   return (
     <Container
       maxWidth="xl"
-      sx={{ backgroundColor: "#ECECEC", minHeight: "100vh", pt: 7 }}
+      sx={{ backgroundColor: "#ECECEC", minHeight: "100vh", pt: 7,pb:5 }}
     >
       <Box
         className="fixed-card"
@@ -380,7 +380,7 @@ const DashboardScreen = () => {
             <Box
               sx={{
                 position: "absolute",
-                left: `calc(${progressPercent}% + 45px)`,
+                left: `calc(${progressPercent}% + 44px)`,
                 top: "50%",
                 transform: "translateY(-50%)",
                 width: 16,

@@ -25,6 +25,7 @@ const SliderCard = ({ id, handleNext, subHeading }) => {
           onChange={(e, val) => setSliderValue(val)}
           valueLabelDisplay="on"
           sx={{
+            marginTop:"3%",
             "& .MuiSlider-track": { backgroundColor: "rgb(239, 156, 0)", height: 20, border: "none" },
             "& .MuiSlider-rail": { backgroundColor: "#DEDEDE", height: 20 },
             "& .MuiSlider-thumb": {

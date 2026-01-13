@@ -1,13 +1,17 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+// const { fileURLToPath } = require('url');
 
 const app = express();
 
 // ✅ Step 1: Setup CORS and JSON body parsing
 app.use(cors({
-  origin: "http://localhost:5174", // Your frontend's origin
+  origin: process.env.NODE_ENV === 'production' 
+    ? true // true allows the origin of the request (same-origin)
+    : "http://localhost:5174", 
   credentials: true
 }));
 app.use(express.json());
@@ -40,9 +44,7 @@ app.use("/api/form", formRoutes);
 app.use("/api/activity", activityRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/admin", adminRoutes);
-
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 // Add this line to register the upload route
 app.use("/api/upload", uploadRoutes);
 
@@ -54,6 +56,32 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
+
+
+
+// 1. Point to the 'dist' folder inside the frontend directory
+// __dirname is the current folder (backend), so we go up one level to find frontend
+// const frontendPath = path.join(__dirname, '..', 'frontend', 'dist');
+const frontendPath = path.resolve(__dirname, "..", "frontend", "dist");
+
+// app.use(express.static(frontendPath));
+// Check if the path exists before using it to avoid weird errors
+const fs = require('fs');
+if (fs.existsSync(frontendPath)) {
+    app.use("/", express.static(frontendPath));
+} else {
+    console.warn("⚠️ Warning: Frontend dist folder not found. Run 'npm run build' in frontend.");
+}
+
+// The "Catch-All" for React Router
+app.get(/^\/(?!api).*/, (req, res) => {
+  // If the request starts with /api, don't send index.html (send 404 instead)
+  if (req.url.startsWith('/api')) {
+    return res.status(404).json({ message: "API route not found" });
+  }
+  res.sendFile(path.join(frontendPath, 'index.html'));
+})
+
 
 // ✅ Step 4: Start Server
 const PORT = process.env.PORT || 5000;
