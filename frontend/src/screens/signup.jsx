@@ -23,10 +23,15 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
+
   const sendOtp = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/send-otp", { email });
+      
+      await axios.post(`${BASE_URL}/api/auth/send-otp`, { email });
       setActiveStep(1);
       setError("");
       alert("OTP sent to your email");
@@ -40,7 +45,7 @@ const Signup = () => {
   const verifyOtp = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/verify-otp", { email, otp });
+      await axios.post(`${BASE_URL}/api/auth/verify-otp`, { email, otp });
       setActiveStep(2);
       setError("");
       alert("OTP verified! Set your password.");
@@ -60,7 +65,7 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/set-password", { email, password });
+      await axios.post(`${BASE_URL}/api/auth/set-password`, { email, password });
       setError("");
       alert("Signup successful!");
       // Reset state or navigate to login

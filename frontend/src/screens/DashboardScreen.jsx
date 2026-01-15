@@ -157,8 +157,12 @@ const DashboardScreen = () => {
   useEffect(() => {
     const loadProgress = async () => {
       try {
+        const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
         const res = await axios.get(
-          `http://localhost:5000/api/form/load-progress/${userId}`
+          `${BASE_URL}/api/form/load-progress/${userId}`
+          // `http://localhost:5000/api/form/load-progress/${userId}`
         );
         const saved = res.data.responses || [];
         setResponses(saved);
@@ -204,8 +208,12 @@ const DashboardScreen = () => {
       setResponses(updatedResponses);
       setSectionAnswers({});
 
+      const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
       axios
-        .post("http://localhost:5000/api/form/save-progress", {
+        .post(`${BASE_URL}/api/form/save-progress`, {
+        // .post("http://localhost:5000/api/form/save-progress", {
           userId,
           responses: updatedResponses,
         })

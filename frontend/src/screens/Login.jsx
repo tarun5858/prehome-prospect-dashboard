@@ -61,7 +61,11 @@ const loginWithGoogle = useGoogleLogin({
   onError: () => alert("Google login failed"),
 });
 
-  const apiBase = "http://localhost:5000/api/auth";
+const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
+  const apiBase = `${BASE_URL}/api/auth`;
+  // const apiBase = "http://localhost:5000/api/auth";
 
   const handleLogin = async () => {
     try {

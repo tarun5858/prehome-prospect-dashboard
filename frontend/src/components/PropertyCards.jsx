@@ -53,6 +53,9 @@ const PropertyCards = ({
     return null;
   };
 
+  const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
   return (
     <Box className="property-card-container">
       {/* Image Section */}
@@ -65,7 +68,8 @@ const PropertyCards = ({
               src={
                 images[currentImageIndex].url.startsWith("http")
                   ? images[currentImageIndex].url
-                  : `http://localhost:5000${images[currentImageIndex].url}`
+                  : `${BASE_URL}${images[currentImageIndex].url}`
+                  // : `http://localhost:5000${images[currentImageIndex].url}`
               }
               alt={images[currentImageIndex].label || "Property"}
               className="prop-card-img"

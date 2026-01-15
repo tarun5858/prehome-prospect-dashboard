@@ -8,8 +8,12 @@ const SendOtp = () => {
   const navigate = useNavigate();
 
   const sendOtp = async () => {
+    const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
     try {
-      await axios.post('http://localhost:5000/api/auth/send-otp', { email });
+      await axios.post(`${BASE_URL}/api/auth/send-otp`, { email });
+      // await axios.post('http://localhost:5000/api/auth/send-otp', { email });
       alert('OTP sent to your email');
       navigate('/verify', { state: { email } });
     } catch (error) {

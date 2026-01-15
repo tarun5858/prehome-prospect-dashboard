@@ -68,8 +68,13 @@ const PropertyDetails = () => {
 
  const fetchProperty = async () => {
   try {
+    const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
+
     const res = await axios.get(
-      `http://localhost:5000/api/properties/${id}`
+      `${BASE_URL}/api/properties/${id}`
+      // `http://localhost:5000/api/properties/${id}`
     );
 
     const propertyData = res.data;
@@ -79,7 +84,7 @@ const PropertyDetails = () => {
       ...img,
       url: img.url.startsWith("http")
         ? img.url
-        : `http://localhost:5000${img.url}`,
+        : `${BASE_URL}${img.url}`,
     }));
 
     propertyData.images = fixedImages;
@@ -121,8 +126,13 @@ const fetchNearbyPlaces = async (location, propertyTypes) => {
 
     const results = await Promise.all(
       filteredTypes.map(async (type) => {
+        const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
         const res = await axios.post(
-          "http://localhost:5000/api/properties/nearby-places",
+          
+          `${BASE_URL}/api/properties/nearby-places`,
+          // "http://localhost:5000/api/properties/nearby-places",
           { location, type, radius }
         );
         return res.data;
@@ -143,9 +153,13 @@ const fetchNearbyPlaces = async (location, propertyTypes) => {
   };
 
  const handleImageLabelClick = (url, index) => {
+  const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
+  
   const fullUrl = url.startsWith("http")
     ? url
-    : `http://localhost:5000${url}`;
+    : `${BASE_URL}${url}`;
   setSelectedImageUrl(fullUrl);
   setClickedIndex(index);
 };

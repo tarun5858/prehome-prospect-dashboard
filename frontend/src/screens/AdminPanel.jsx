@@ -33,7 +33,12 @@ const AdminPanel = () => {
     radius: "", // ✅ Added radius
   });
 
-  const API_BASE = "http://localhost:5000/api";
+  // 1. Define the base URL at the top of your component or in a config file
+const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
+
+  const API_BASE =`${BASE_URL}/api`;
   const UPLOADS_BASE = "http://localhost:5000";
 
   useEffect(() => {
