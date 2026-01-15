@@ -7,13 +7,32 @@ const path = require("path");
 
 const app = express();
 
-// ✅ Step 1: Setup CORS and JSON body parsing
+
+const allowedOrigins = [
+  "http://localhost:5173", // Vite default
+  "http://localhost:5000",
+  "https://prehome-prospect-dashboard-6cya.onrender.com" // Your Live URL
+];
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? true // true allows the origin of the request (same-origin)
-    : "http://localhost:5174", 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
+
+// ✅ Step 1: Setup CORS and JSON body parsing
+// app.use(cors({
+//   origin: process.env.NODE_ENV === 'production' 
+//     ? true // true allows the origin of the request (same-origin)
+//     : "http://localhost:5174", 
+//   credentials: true
+// }));
 app.use(express.json());
 
 // 🚨 Fix for COOP blocking issue
