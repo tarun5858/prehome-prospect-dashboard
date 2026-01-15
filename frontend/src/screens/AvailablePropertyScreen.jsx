@@ -18,8 +18,11 @@ const AvailablePropertyScreen = () => {
   }, [userId]);
 
   const fetchProperties = async () => {
+    const BASE_URL = import.meta.env.MODE === 'production' 
+  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
+  : 'http://localhost:5000';
     try {
-      const res = await axios.get(`http://localhost:5000/api/properties?userId=${userId}`);
+      const res = await axios.get(`${BASE_URL}/api/properties?userId=${userId}`);
       setProperties(res.data);
     } catch (err) {
       console.error("Error fetching properties:", err);
