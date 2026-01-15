@@ -2,7 +2,7 @@
   "name": "prehome-prospect-dashboard",
   "version": "1.0.0",
   "scripts": {
-    "render-build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "render-build": "cd backend && npm install && cd ../frontend && npm install && chmod +x node_modules/.bin/vite && npm run build",
     "start": "node backend/server.js"
   }
 }
