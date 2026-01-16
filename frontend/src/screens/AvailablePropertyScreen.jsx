@@ -46,7 +46,7 @@ const AvailablePropertyScreen = () => {
         </Typography>
       </Box>
 
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         {properties.map((property) => {
           let status = "";
           let visitDate = "";

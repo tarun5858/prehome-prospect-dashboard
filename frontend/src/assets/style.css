@@ -648,7 +648,8 @@ body {
 .footer {
   border: 2px solid #000000;
   padding: 0 20px;
-  margin: 0px 15px;
+  margin: 0px;
+  /* margin: 0px 15px; */
   /* padding-top: 1%; */
   display: flex;
   justify-content: space-between;
@@ -674,7 +675,8 @@ body {
   font-family: "Poppins, sans-serif";
   background-color: #fff;
   padding: 16px 0px;
-  padding-left: 0px !important;
+  padding: 0px !important;
+  /* padding-left: 0px !important; */
 }
 .chatbot-footer {
   position: absolute;

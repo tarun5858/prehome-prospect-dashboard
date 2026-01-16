@@ -14,6 +14,7 @@ import {
   ListItemText,
   useMediaQuery,
   Paper,
+  Container
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -62,9 +63,10 @@ export default function Sidebar() {
       if (!userId) return;
 
       try {
-        const BASE_URL = import.meta.env.MODE === 'production' 
-  ? 'https://prehome-prospect-dashboard-6cya.onrender.com' 
-  : 'http://localhost:5000';
+        const BASE_URL =
+          import.meta.env.MODE === "production"
+            ? "https://prehome-prospect-dashboard-6cya.onrender.com"
+            : "http://localhost:5000";
         const res = await axios.get(
           `${BASE_URL}/api/notifications/${userId}`
           // `http://localhost:5000/api/notifications/${userId}`
@@ -270,10 +272,10 @@ export default function Sidebar() {
                   right: -8,
                   top: -5,
                   width: 325,
-                  height: 375,
+                  height: 340,
                   // maxHeight: 350,
                   overflowY: "auto",
-                  scrollbarWidth:"none",
+                  scrollbarWidth: "none",
                   zIndex: 999,
                   p: 2,
                   borderRadius: "16px",
@@ -287,6 +289,13 @@ export default function Sidebar() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     // position:"fixed",
+                    position: "fixed",
+                    // top: 50,
+                    zIndex: 9999,
+                    background: "#fff",
+                    width: "20%",
+                    height: "7%",
+                    top: "5px",
                   }}
                 >
                   <Typography className="poppins-bold-16" sx={{ mb: 1 }}>
@@ -303,36 +312,87 @@ export default function Sidebar() {
                     </Badge>
                   </IconButton>
                 </Box>
-                {notifications.length === 0 ? (
+                {/* {notifications.length === 0 ? (
                   <Typography className="poppins-bold-12">
                     No notifications
                   </Typography>
                 ) : (
                   notifications.map((note, idx) => (
+                     <Container 
+    disableGutters key={note._id || idx} sx={{ 
+      marginTop: "5%", 
+      display: "flex",         // Added this
+      flexDirection: "column", // Stack children vertically
+      alignItems: "center",    // Center the Box horizontally
+      width: "100%"            // Ensure it spans the full width of the parent
+    }} // Key moves here to the new parent
+  >
                     <Box
-                      key={idx}
+                      // key={idx}
                       sx={{
-                          width: 293,
-                          height: 80,
-                          marginTop: "10px",
-                          color: "gray",
-                          borderRadius: "16px",
-                          padding: "12px",
-                          gap: 12,
-                          background: "#FFE6E6",
-                        }}
+                        width: 293,
+                        height: 80,
+                        marginTop: "10px",
+                        color: "gray",
+                        borderRadius: "16px",
+                        padding: "12px",
+                        gap: 12,
+                        background: "#FFE6E6",
+                      }}
                     >
                       <Typography className="poppins-bold-10 ">
                         {note.message}
                       </Typography>
-                      <Typography
-                        
-                      >
+                      <Typography>
                         {new Date(note.createdAt).toLocaleString()}
                       </Typography>
                     </Box>
+                    </Container>
                   ))
-                )}
+                )} */}
+                {/* 1. The Container is now the permanent parent outside the map */}
+<Container 
+  disableGutters 
+  sx={{ 
+    marginTop: "14%", 
+    display: "flex", 
+    flexDirection: "column", 
+    alignItems: "center", 
+    width: "100%",
+    gap: "15px" // Automatically handles spacing between notifications
+  }}
+>
+  {notifications.length === 0 ? (
+    <Typography className="poppins-bold-12">
+      No notifications
+    </Typography>
+  ) : (
+    notifications.map((note, idx) => (
+      /* 2. The Box is now the direct child of the map, so the KEY goes here */
+      <Box
+        key={note._id || idx} 
+        sx={{
+          width: 293,
+          height: 80,
+          color: "gray",
+          borderRadius: "16px",
+          padding: "12px",
+          background: "#FFE6E6",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between"
+        }}
+      >
+        <Typography className="poppins-bold-10">
+          {note.message}
+        </Typography>
+        <Typography sx={{ fontSize: "0.75rem" }}>
+          {new Date(note.createdAt).toLocaleString()}
+        </Typography>
+      </Box>
+    ))
+  )}
+</Container>
               </Paper>
             )}
           </Box>

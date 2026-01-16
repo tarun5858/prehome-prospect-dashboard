@@ -36,7 +36,7 @@ const ShortlistCTA = ({ userId, propertyId, onUpdate }) => {
     if (userId && propertyId) {
       fetchUserActivity();
     }
-  }, [userId, propertyId]);
+  }, [userId, propertyId,BASE_URL]);
 
   const saveActivity = async (updatedFields) => {
     try {
