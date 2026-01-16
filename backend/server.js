@@ -10,7 +10,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173", // Vite default
-  "http://localhost:5000",
+  "http://localhost:5174", // Vite default
   "https://prehome-prospect-dashboard-6cya.onrender.com" // Your Live URL
 ];
 
