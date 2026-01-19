@@ -223,6 +223,16 @@ export default function Sidebar() {
     </Box>
   );
 
+  const getNotificationColor = (message) => {
+    const msg = message.toLowerCase();
+    
+    if (msg.includes("progress updated")) return "#E3F2FD"; // Light Blue
+    if (msg.includes("interested")) return "#E8F5E9";       // Light Green
+    if (msg.includes("shortlisted")) return "#FFFDE7";      // Light Yellow
+    
+    return "#FFE6E6"; // Default Light Red/Pink
+  };
+  
   return (
     <Box>
       <CssBaseline />
@@ -312,44 +322,7 @@ export default function Sidebar() {
                     </Badge>
                   </IconButton>
                 </Box>
-                {/* {notifications.length === 0 ? (
-                  <Typography className="poppins-bold-12">
-                    No notifications
-                  </Typography>
-                ) : (
-                  notifications.map((note, idx) => (
-                     <Container 
-    disableGutters key={note._id || idx} sx={{ 
-      marginTop: "5%", 
-      display: "flex",         // Added this
-      flexDirection: "column", // Stack children vertically
-      alignItems: "center",    // Center the Box horizontally
-      width: "100%"            // Ensure it spans the full width of the parent
-    }} // Key moves here to the new parent
-  >
-                    <Box
-                      // key={idx}
-                      sx={{
-                        width: 293,
-                        height: 80,
-                        marginTop: "10px",
-                        color: "gray",
-                        borderRadius: "16px",
-                        padding: "12px",
-                        gap: 12,
-                        background: "#FFE6E6",
-                      }}
-                    >
-                      <Typography className="poppins-bold-10 ">
-                        {note.message}
-                      </Typography>
-                      <Typography>
-                        {new Date(note.createdAt).toLocaleString()}
-                      </Typography>
-                    </Box>
-                    </Container>
-                  ))
-                )} */}
+    
                 {/* 1. The Container is now the permanent parent outside the map */}
 <Container 
   disableGutters 
@@ -377,10 +350,14 @@ export default function Sidebar() {
           color: "gray",
           borderRadius: "16px",
           padding: "12px",
-          background: "#FFE6E6",
+          // 🔥 DYNAMIC BACKGROUND COLOR CALL HERE
+          background: getNotificationColor(note.message),
+          // background: "#FFE6E6",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          borderLeft: `6px solid ${getNotificationColor(note.message)}`, // Optional: adds a nice left accent
+          filter: "brightness(0.95)" // Optional: makes colors slightly richer
         }}
       >
         <Typography className="poppins-bold-10">
