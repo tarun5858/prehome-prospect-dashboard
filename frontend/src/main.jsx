@@ -10,7 +10,8 @@ const root = createRoot(document.getElementById('root'));
 
 root.render(
   <StrictMode>
-    <GoogleOAuthProvider clientId="25503459485-ujh01d85nff9svsahg6hv8ahif1pnoej.apps.googleusercontent.com">
+    {/* <GoogleOAuthProvider clientId="25503459485-ujh01d85nff9svsahg6hv8ahif1pnoej.apps.googleusercontent.com"> */}
+    <GoogleOAuthProvider clientId="290688775370-a38pei8rsila6pij39svvmmkkd77pe65.apps.googleusercontent.com">
       <App />
     </GoogleOAuthProvider>
   </StrictMode>
