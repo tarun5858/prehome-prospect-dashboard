@@ -186,6 +186,7 @@ export default function Sidebar() {
           mx: 2,
           mb: 2,
           borderRadius: "12px",
+          cursor: "pointer",
           backgroundColor:
             selectedItem === "Logout" ? "#fdf0d9" : "transparent",
           transition: "background-color 0.3s ease",
@@ -376,7 +377,7 @@ export default function Sidebar() {
 
           {isMobile && (
             <IconButton
-              sx={{ color: "black", ml: 1 }}
+              sx={{ color: "black", ml: 1,cursor:"pointer" }}
               onClick={() =>
                 handleListItemClick({ name: "Logout", route: "logout" })
               }

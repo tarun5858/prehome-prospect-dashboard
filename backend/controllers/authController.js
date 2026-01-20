@@ -1,16 +1,18 @@
+require('dotenv').config();
+
 const User = require('../models/userModel');
 const Otp = require('../models/otpModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
-const JWT_SECRET = 'prehome_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET || 'prehome_secret_key';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'akshay821212@gmail.com',
-    pass: 'lzzc soyw iipi burq'
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_PASS
   }
 });
 
