@@ -15,17 +15,28 @@ const JWT_SECRET = process.env.JWT_SECRET || 'prehome_secret_key';
 //     pass: process.env.EMAIL_PASS
 //   }
 // });
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.gmail.com',
+//   port: 587,
+//   secure: false, // Must be false for port 587
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   },
+//   tls: {
+//     rejectUnauthorized: false // Helps prevent timeout issues on some cloud servers
+//   }
+// });
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // Must be false for port 587
+  port: 465,
+  secure: true, // Use SSL for port 465
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS,
   },
-  tls: {
-    rejectUnauthorized: false // Helps prevent timeout issues on some cloud servers
-  }
+  // Adding a slight timeout but removing 'pool' for local stability
+  connectionTimeout: 10000, 
 });
 
 // ====================== Send OTP ======================
