@@ -5,6 +5,8 @@ const Otp = require('../models/otpModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const JWT_SECRET = process.env.JWT_SECRET || 'prehome_secret_key';
 
@@ -27,17 +29,18 @@ const JWT_SECRET = process.env.JWT_SECRET || 'prehome_secret_key';
 //     rejectUnauthorized: false // Helps prevent timeout issues on some cloud servers
 //   }
 // });
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // Use SSL for port 465
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  // Adding a slight timeout but removing 'pool' for local stability
-  connectionTimeout: 10000, 
-});
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.gmail.com',
+//   port: 465,
+//   secure: true, // Use SSL for port 465
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+//   // Adding a slight timeout but removing 'pool' for local stability
+//   connectionTimeout: 10000, 
+// });
+
 
 // ====================== Send OTP ======================
 const sendOtp = async (req, res) => {
@@ -45,22 +48,52 @@ const sendOtp = async (req, res) => {
   const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
   try {
+    // 3. Save to Database first
     await Otp.create({ email, otp: otpCode });
 
-    await transporter.sendMail({
+    // 4. Send using Resend API (Notice the format change)
+    const { data, error } = await resend.emails.send({
+      from: 'onboarding@resend.dev', // Resend provides this for testing
       to: email,
       subject: 'Your OTP Code',
-      text: `Your OTP code is ${otpCode}`,
+      html: `<strong>Your OTP code is: ${otpCode}</strong><p>This code will expire shortly.</p>`,
     });
+
+    if (error) {
+      console.error('Resend Error:', error);
+      return res.status(500).json({ message: 'Email delivery failed' });
+    }
 
     res.status(200).json({ message: 'OTP sent to email' });
   } catch (err) {
-    console.error('Error sending OTP:', err);
+    console.error('Error in sendOtp function:', err);
     res.status(500).json({ message: 'Failed to send OTP' });
   }
 };
 
+// const sendOtp = async (req, res) => {
+//   const { email } = req.body;
+//   const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+//   try {
+//     await Otp.create({ email, otp: otpCode });
+
+//     await transporter.sendMail({
+//       to: email,
+//       subject: 'Your OTP Code',
+//       text: `Your OTP code is ${otpCode}`,
+//     });
+
+//     res.status(200).json({ message: 'OTP sent to email' });
+//   } catch (err) {
+//     console.error('Error sending OTP:', err);
+//     res.status(500).json({ message: 'Failed to send OTP' });
+//   }
+// };
+
 // ====================== Verify OTP ======================
+
+
 const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
 
