@@ -357,7 +357,7 @@ const DashboardScreen = () => {
                 left: 0,
                 top: 0,
                 height: "100%",
-                width: `calc(${progressPercent}% + 60px)`,
+                width: `calc(${progressPercent}% + 114px)`,
                 background: "#0086AD",
                 borderRadius: "16px",
                 transition: "width 0.4s",
@@ -388,7 +388,7 @@ const DashboardScreen = () => {
             <Box
               sx={{
                 position: "absolute",
-                left: `calc(${progressPercent}% + 44px)`,
+                left: `calc(${progressPercent}% + 96px)`,
                 top: "50%",
                 transform: "translateY(-50%)",
                 width: 16,

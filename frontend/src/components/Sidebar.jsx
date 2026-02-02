@@ -227,9 +227,9 @@ export default function Sidebar() {
   const getNotificationColor = (message) => {
     const msg = message.toLowerCase();
     
-    if (msg.includes("progress updated")) return "#E3F2FD"; // Light Blue
-    if (msg.includes("interested")) return "#E8F5E9";       // Light Green
-    if (msg.includes("shortlisted")) return "#FFFDE7";      // Light Yellow
+    if (msg.includes("progress updated")) return "#FFE6E6";
+    if (msg.includes("interested")) return "#D7FFD9";       
+    if (msg.includes("shortlisted")) return "#F9F0DF";      
     
     return "#FFE6E6"; // Default Light Red/Pink
   };
@@ -243,11 +243,25 @@ export default function Sidebar() {
           width: isMobile ? "100%" : `calc(100% - ${drawerWidth}px)`,
           ml: isMobile ? 0 : `${drawerWidth}px`,
           backgroundColor: "white",
-          boxShadow: "none",
+          // boxShadow: "none",
+          boxShadow: "0 13px 35px -12px rgba(35, 35, 35, 0.15)",
         }}
       >
         <Toolbar>
           {isMobile && (
+            <Box
+          component="img"
+          src={logo}
+          alt="Logo"
+          sx={{
+            width: "50px",
+            height: "50px",
+            objectFit: "contain",
+          }}
+        />
+          )} 
+
+          {/* {isMobile && (
             <IconButton
               edge="start"
               color="inherit"
@@ -256,7 +270,7 @@ export default function Sidebar() {
             >
               <MenuIcon />
             </IconButton>
-          )}
+          )} */}
 
           <Typography
             variant="h6"
@@ -264,6 +278,7 @@ export default function Sidebar() {
             sx={{ flexGrow: 1, color: "black" }}
           />
 
+           
           <Box sx={{ position: "relative" }} ref={dropdownRef}>
             <IconButton
               color="inherit"
@@ -304,9 +319,11 @@ export default function Sidebar() {
                     // top: 50,
                     zIndex: 9999,
                     background: "#fff",
-                    width: "20%",
+                    
+                    // width: "xs:{20%}",
+                    width:{ xs: "80%", md: "20%" },
                     height: "7%",
-                    top: "5px",
+                    top: { xs: "1px", md: "5px" },
                   }}
                 >
                   <Typography className="poppins-bold-16" sx={{ mb: 1 }}>
@@ -358,7 +375,7 @@ export default function Sidebar() {
           flexDirection: "column",
           justifyContent: "space-between",
           borderLeft: `6px solid ${getNotificationColor(note.message)}`, // Optional: adds a nice left accent
-          filter: "brightness(0.95)" // Optional: makes colors slightly richer
+          // filter: "brightness(0.95)" // Optional: makes colors slightly richer
         }}
       >
         <Typography className="poppins-bold-10">
@@ -375,7 +392,7 @@ export default function Sidebar() {
             )}
           </Box>
 
-          {isMobile && (
+          {/* {isMobile && (
             <IconButton
               sx={{ color: "black", ml: 1,cursor:"pointer" }}
               onClick={() =>
@@ -384,7 +401,7 @@ export default function Sidebar() {
             >
               <MdLogout />
             </IconButton>
-          )}
+          )} */}
         </Toolbar>
       </AppBar>
 
