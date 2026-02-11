@@ -97,12 +97,23 @@
 
 // export default MapComponent;
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Marker,
+  useLoadScript,
+  InfoWindow,
+} from "@react-google-maps/api";
 import axios from "axios";
 
-const MapComponent = ({ center, places = [], propertyAddress = "", propertyName = "Property Location" }) => {
+const MapComponent = ({
+  center,
+  places = [],
+  propertyAddress = "",
+  propertyName = "Property Location",
+}) => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyA08jwhkUMNssPvaWsRlYE-S--IBpa4mUc", // Replace with your valid key
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
   });
 
   const [mapCenter, setMapCenter] = useState(center);
@@ -135,7 +146,7 @@ const MapComponent = ({ center, places = [], propertyAddress = "", propertyName 
               address: propertyAddress,
               key: "AIzaSyA08jwhkUMNssPvaWsRlYE-S--IBpa4mUc", // Same key
             },
-          }
+          },
         );
 
         if (res.data.status === "OK") {
@@ -165,41 +176,43 @@ const MapComponent = ({ center, places = [], propertyAddress = "", propertyName 
   // };
 
   const getMarkerIcon = (placeTypes = []) => {
-  const types = placeTypes.map(t => t.toLowerCase()); // Case-insensitive check
+    const types = placeTypes.map((t) => t.toLowerCase()); // Case-insensitive check
 
-  if (types.includes("restaurant") || types.includes("food")) 
-    return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
-  
+    if (types.includes("restaurant") || types.includes("food"))
+      return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
 
-  if (types.includes("hospital") || types.includes("health") || types.includes("doctor")) 
-    return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
-  
-  if (types.includes("school") || types.includes("university")) 
-    return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-  
+    if (
+      types.includes("hospital") ||
+      types.includes("health") ||
+      types.includes("doctor")
+    )
+      return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
 
-  if (types.includes("shopping_mall") || types.includes("department_store")) {
-     return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+    if (types.includes("school") || types.includes("university"))
+      return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+
+    if (types.includes("shopping_mall") || types.includes("department_store")) {
+    return "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
   }
 
-  if (types.includes("park")) 
-    return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+    if (types.includes("park"))
+      return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
 
-  return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"; // Default
-};
+    return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"; // Default
+  };
 
   return (
     <GoogleMap
-    // height: "560px"
+      // height: "560px"
       mapContainerStyle={{ width: "100%", height: "70vh", borderRadius: 16 }}
       center={mapCenter}
       zoom={zoom}
       onLoad={handleOnLoad}
       options={{
-    streetViewControl: false,
-    mapTypeControl: false,
-    fullscreenControl: false,
-  }}
+        streetViewControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false,
+      }}
     >
       {/* Address marker (big red) */}
       {addressCoords && (
@@ -241,7 +254,10 @@ const MapComponent = ({ center, places = [], propertyAddress = "", propertyName 
       {/* InfoWindow for selected nearby place */}
       {selectedPlace && (
         <InfoWindow
-          position={{ lat: selectedPlace.latitude, lng: selectedPlace.longitude }}
+          position={{
+            lat: selectedPlace.latitude,
+            lng: selectedPlace.longitude,
+          }}
           onCloseClick={() => setSelectedPlace(null)}
         >
           <div>
