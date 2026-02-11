@@ -154,28 +154,59 @@ const MapComponent = ({ center, places = [], propertyAddress = "", propertyName 
 
   if (!isLoaded) return <div>Loading...</div>;
 
+  // const getMarkerIcon = (placeTypes = []) => {
+  //   if (placeTypes.includes("restaurant")) return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
+  //   if (placeTypes.includes("hospital")) return "https://maps.google.com/mapfiles/ms/icons/hospitals.png";
+  //   if (placeTypes.includes("school")) return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+  //   if (placeTypes.includes("gym")) return "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
+  //   if (placeTypes.includes("shopping_mall") || placeTypes.includes("mall")) return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+  //   if (placeTypes.includes("park")) return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+  //   return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
+  // };
+
   const getMarkerIcon = (placeTypes = []) => {
-    if (placeTypes.includes("restaurant")) return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
-    if (placeTypes.includes("hospital")) return "https://maps.google.com/mapfiles/ms/icons/hospitals.png";
-    if (placeTypes.includes("school")) return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-    if (placeTypes.includes("gym")) return "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
-    if (placeTypes.includes("shopping_mall") || placeTypes.includes("mall")) return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-    if (placeTypes.includes("park")) return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+  const types = placeTypes.map(t => t.toLowerCase()); // Case-insensitive check
+
+  if (types.includes("restaurant") || types.includes("food")) 
+    return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
+  
+
+  if (types.includes("hospital") || types.includes("health") || types.includes("doctor")) 
     return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
-  };
+  
+  if (types.includes("school") || types.includes("university")) 
+    return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+  
+
+  if (types.includes("shopping_mall") || types.includes("department_store")) {
+     return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+  }
+
+  if (types.includes("park")) 
+    return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+
+  return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"; // Default
+};
 
   return (
     <GoogleMap
-      mapContainerStyle={{ width: "100%", height: "560px", borderRadius: 16 }}
+    // height: "560px"
+      mapContainerStyle={{ width: "100%", height: "70vh", borderRadius: 16 }}
       center={mapCenter}
       zoom={zoom}
       onLoad={handleOnLoad}
+      options={{
+    streetViewControl: false,
+    mapTypeControl: false,
+    fullscreenControl: false,
+  }}
     >
       {/* Address marker (big red) */}
       {addressCoords && (
         <Marker
           position={addressCoords}
           title={propertyAddress}
+          zIndex={1000}
           icon={{
             url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
             scaledSize: new window.google.maps.Size(60, 60),
