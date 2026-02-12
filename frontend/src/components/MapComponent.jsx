@@ -6,7 +6,7 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import axios from "axios";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
 const MapComponent = ({
   center,
@@ -79,32 +79,62 @@ const MapComponent = ({
   //   return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
   // };
 
+  // const getMarkerIcon = (placeTypes = []) => {
+  //   const types = placeTypes.map((t) => t.toLowerCase()); // Case-insensitive check
+
+  //   if (types.includes("restaurant") || types.includes("food"))
+  //     return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
+
+  //   if (
+  //     types.includes("hospital") ||
+  //     types.includes("doctor")
+  //   )
+  //     return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+  //   if (placeTypes.includes("gym"))
+  //     return "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
+
+  //   if (types.includes("school") || types.includes("university"))
+  //     return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+
+  //   if (types.includes("shopping_mall") || types.includes("department_store")) {
+  //     return "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+  //   }
+
+  //   if (types.includes("park"))
+  //     return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+
+  //   return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"; // Default
+  // };
+
   const getMarkerIcon = (placeTypes = []) => {
-    const types = placeTypes.map((t) => t.toLowerCase()); // Case-insensitive check
+    // Ensure types is an array and lowercase everything for safe comparison
+    const types = Array.isArray(placeTypes)
+      ? placeTypes.map((t) => t.toLowerCase())
+      : [];
 
-    if (types.includes("restaurant") || types.includes("food"))
+    if (types.includes("restaurant"))
       return "https://maps.google.com/mapfiles/ms/icons/orange-dot.png";
-
-    if (
-      types.includes("hospital") ||
-      types.includes("doctor")
-    )
+    if (types.includes("hospital"))
       return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
-
-    if (placeTypes.includes("gym"))
+    if (types.includes("school"))
+      return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+    if (types.includes("gym"))
       return "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
-
-    if (types.includes("school") || types.includes("university"))
-      return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-
-    if (types.includes("shopping_mall") || types.includes("department_store")) {
-      return "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-    }
-
     if (types.includes("park"))
       return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
 
-    return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"; // Default
+    // ✅ FIX: Match the Google 'shopping_mall' type and use a reliable Blue Icon
+    if (
+      types.includes("shopping_mall") ||
+      types.includes("mall") ||
+      types.includes("department_store")
+    ) {
+      return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    }
+
+    // Fallback for anything else
+    return "https://maps.google.com/mapfiles/ms/icons/ltblue-dot.png";
   };
 
   return (
@@ -139,24 +169,36 @@ const MapComponent = ({
         title={propertyName}
         icon={{
           // url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-          url: {logo},
+          url: logo,
           scaledSize: new window.google.maps.Size(50, 50),
+          origin: new window.google.maps.Point(0, 0),
+          anchor: new window.google.maps.Point(25, 25),
         }}
       />
 
       {/* Nearby places markers */}
-      {places.map((place, index) => (
-        <Marker
-          key={index}
-          position={{ lat: place.latitude, lng: place.longitude }}
-          icon={{
-            url: getMarkerIcon(place.types || []),
-            scaledSize: new window.google.maps.Size(40, 40),
-          }}
-          title={place.name}
-          onClick={() => handleMarkerClick(place)}
-        />
-      ))}
+      {places.map((place, index) => {
+        // Add this log to see what the "Mall" data actually looks like
+        if (
+          place.name.toLowerCase().includes("mall") ||
+          place.types.includes("shopping_mall")
+        ) {
+          console.log("Mall Data Found:", place);
+        }
+
+        return (
+          <Marker
+            key={index}
+            position={{ lat: place.latitude, lng: place.longitude }}
+            icon={{
+              url: getMarkerIcon(place.types || []),
+              scaledSize: new window.google.maps.Size(40, 40),
+            }}
+            title={place.name}
+            onClick={() => handleMarkerClick(place)}
+          />
+        );
+      })}
 
       {/* InfoWindow for selected nearby place */}
       {selectedPlace && (
