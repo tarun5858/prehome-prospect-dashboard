@@ -233,7 +233,7 @@ const AdminPanel = () => {
   { label: "Hospital", value: "hospital" },
   { label: "Restaurant", value: "restaurant" },
   { label: "School", value: "school" },
-  { label: "Mall", value: "shopping_mall" }, // Match the new enum
+  { label: "Mall", value: "mall" }, // Match the new enum
   { label: "Park", value: "park" },
   { label: "Gym", value: "gym" },
 ];
