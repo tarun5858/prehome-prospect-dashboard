@@ -6,6 +6,7 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import axios from "axios";
+import logo from "../assets/logo.png"
 
 const MapComponent = ({
   center,
@@ -137,7 +138,8 @@ const MapComponent = ({
         position={mapCenter}
         title={propertyName}
         icon={{
-          url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+          // url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+          url: {logo},
           scaledSize: new window.google.maps.Size(50, 50),
         }}
       />
