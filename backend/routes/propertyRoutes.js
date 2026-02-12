@@ -11,7 +11,8 @@ const Property = require('../models/propertyModel');
 // Valid Google Place types to avoid typos like "hospitals"
 const validPlaceTypes = [
   "hospital", "school", "restaurant", "atm", "bank", "gym", "park", "doctor",
-  "pharmacy", "university", "library", "police", "fire_station", "grocery_or_supermarket"
+  "pharmacy", "university", "library", "police", "fire_station", 
+  "grocery_or_supermarket", "shopping_mall", "department_store"
 ];
 
 // Existing routes
@@ -24,6 +25,11 @@ router.post("/nearby-places", async (req, res) => {
   const { location, type, radius } = req.body;
 
   const placeType = type?.trim().toLowerCase();
+
+  if (placeType === "mall") {
+  placeType = "shopping_mall";
+}
+
   if (!location || !placeType || !radius) {
     return res.status(400).json({ message: "Location, type, and radius are required" });
   }
@@ -67,6 +73,10 @@ router.get("/:id/nearby", async (req, res) => {
   const propertyId = req.params.id;
   const placeType = req.query.type?.trim().toLowerCase();
 
+  if (placeType === "mall") {
+  placeType = "shopping_mall";
+}
+
   if (!placeType) {
     return res.status(400).json({ message: "Place type is required (e.g., hospital)" });
   }
@@ -81,7 +91,7 @@ router.get("/:id/nearby", async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    const API_KEY = "AIzaSyA08jwhkUMNssPvaWsRlYE-S--IBpa4mUc";
+    const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
     const geoResponse = await axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
       params: { address: property.location, key: API_KEY },
