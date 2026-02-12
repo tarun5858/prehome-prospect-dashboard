@@ -234,7 +234,7 @@ const AdminPanel = () => {
   { label: "Hospital", value: "hospital" },
   { label: "Restaurant", value: "restaurant" },
   { label: "School", value: "school" },
-  { label: "Mall", value: "mall" }, // Match the new enum
+  { label: "shopping_mall", value: "shopping_mall" }, // Match the new enum
   { label: "Park", value: "park" },
   { label: "Gym", value: "gym" },
 ];
@@ -438,7 +438,7 @@ const handleCheckboxChange = (value) => {
               <option value="hospital">Hospital</option>
               <option value="restaurant">Restaurant</option>
               <option value="school">School</option>
-              <option value="mall">Mall</option>
+              <option value="shopping_mall">shopping_mall</option>
               <option value="park">Park</option>
               <option value="gym">Gym</option>
             </select> */}

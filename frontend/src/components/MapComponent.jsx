@@ -73,7 +73,7 @@ const MapComponent = ({
   //   if (placeTypes.includes("hospital")) return "https://maps.google.com/mapfiles/ms/icons/hospitals.png";
   //   if (placeTypes.includes("school")) return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
   //   if (placeTypes.includes("gym")) return "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
-  //   if (placeTypes.includes("mall") || placeTypes.includes("mall")) return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+  //   if (placeTypes.includes("shopping_mall") || placeTypes.includes("shopping_mall")) return "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
   //   if (placeTypes.includes("park")) return "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
   //   return "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
   // };
@@ -96,7 +96,7 @@ const MapComponent = ({
     if (types.includes("school") || types.includes("university"))
       return "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
 
-    if (types.includes("mall") || types.includes("department_store")) {
+    if (types.includes("shopping_mall") || types.includes("department_store")) {
       return "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
     }
 
