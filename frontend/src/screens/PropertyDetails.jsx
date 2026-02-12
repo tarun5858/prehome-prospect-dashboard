@@ -102,6 +102,7 @@ const PropertyDetails = () => {
   "hospital",
   "school",
   "restaurant",
+  "mall",
   "atm",
   "bank",
   "gym",
